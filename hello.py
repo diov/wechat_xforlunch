@@ -1,3 +1,4 @@
+# --coding:utf8--
 import hashlib
 
 from flask import Flask
@@ -24,13 +25,13 @@ def wx_auth():
         token = WX_TOKEN
         wx_list = [token, timestamp, nonce]
         wx_list.sort()
+        wx_list = ''.join(wx_list)
         # sha1加密算法
-        wx_sha1 = hashlib.sha1()
-        map(wx_sha1.update, wx_list)
-        w_hashcode = wx_sha1.hexdigest()
 
-        if w_hashcode == signature:
+        if (hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature):
             return make_response(echostr)
+        else:
+            return '{0}: {1}'.format(signature, w_hashcode)
 
     if request.method == 'POST':
         pass
