@@ -14,7 +14,7 @@ def subscriber(message):
     return 'Hell O! My friend~'
 
 
-@robot.filter(re.compile(".*?instagram\/p.*?"))
+@robot.filter(re.compile(".*?instagram.com\/p.*?"))
 def get_ins_pic(message):
     url = message.content
     req = requests.get(url)
