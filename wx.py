@@ -19,24 +19,5 @@ def hello_world():
     return 'Hello, Flask!'
 
 
-@app.route('/wx')
-def wx_auth():
-    token = WX_TOKEN
-    data = request.args
-    signature = data.get('signature', '')
-    timestamp = data.get('timestamp', '')
-    nonce = data.get('nonce', '')
-    echostr = data.get('echostr', '')
-    wx_list = [token, timestamp, nonce]
-    wx_list.sort()
-    wx_list = ''.join(wx_list)
-
-    # sha1加密算法
-    if hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature:
-        return echostr
-    else:
-        return 'Auth failed!'
-
-
 if __name__ == '__main__':
     app.run(port=5601)
