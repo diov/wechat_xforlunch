@@ -2,7 +2,7 @@
 import hashlib
 
 from flask import Flask
-from flask import make_response
+from werobot.contrib.flask import make_view
 from flask import request
 
 from robot import robot
@@ -10,7 +10,7 @@ from robot import robot
 WX_TOKEN = 'x_forlunch'
 app = Flask(__name__)
 app.debug = True
-app.add_url_rule(rule='/wx', view_func=make_response(robot), methods=['GET', 'POST'])
+app.add_url_rule(rule='/wx', view_func=make_view(robot), methods=['GET', 'POST'])
 
 
 @app.route('/')
