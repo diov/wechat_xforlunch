@@ -11,11 +11,6 @@ def subscriber(message):
     return 'Hell O! My friend~'
 
 
-@robot.handler
-def hello(message):
-    return '{source_message}, yeah, U are right!'.format(source_message=message.content)
-
-
 @robot.filter('www.instagram.com/p')
 def get_ins_pic(message):
     url = message.content
@@ -26,3 +21,8 @@ def get_ins_pic(message):
             return tree.xpath("//meta[@property='og:image']/@content")[0]
         else:
             return 'There is no image return'
+
+
+@robot.handler
+def hello(message):
+    return '{source_message}, yeah, U are right!'.format(source_message=message.content)
