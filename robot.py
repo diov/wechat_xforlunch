@@ -12,4 +12,4 @@ def subscriber(message):
 
 @robot.handler
 def hello(message):
-    return 'Hello! {user}'.format(user=message.source)
+    return '{source_message}, yeah, U are right!'.format(source_message=message.content)
