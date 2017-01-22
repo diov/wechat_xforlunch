@@ -1,4 +1,6 @@
 # --coding:utf8--
+import re
+
 import requests
 from werobot import WeRoBot
 from lxml import html
@@ -11,9 +13,10 @@ def subscriber(message):
     return 'Hell O! My friend~'
 
 
-@robot.filter('www.instagram.com/p')
+@robot.filter(re.compile(".*?instagram\/p.*?"))
 def get_ins_pic(message):
     url = message.content
+    print(",,,,", url)
     req = requests.get(url)
     if req.status_code == 200:
         tree = html.fromstring(req.text)
