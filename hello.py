@@ -1,6 +1,7 @@
 import hashlib
 
 from flask import Flask
+from flask import make_response
 from flask import request
 
 WX_TOKEN = 'x_forlunch'
@@ -29,7 +30,7 @@ def wx_auth():
         w_hashcode = wx_sha1.hexdigest()
 
         if w_hashcode == signature:
-            return echostr
+            return make_response(echostr)
 
     if request.method == 'POST':
         pass
