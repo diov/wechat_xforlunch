@@ -10,6 +10,7 @@ from robot import robot
 WX_TOKEN = 'x_forlunch'
 app = Flask(__name__)
 app.debug = True
+app.add_url_rule(rule='/wx', view_func=make_response(robot), methods=['GET', 'POST'])
 
 
 @app.route('/')
@@ -41,5 +42,4 @@ def wx_auth():
 
 
 if __name__ == '__main__':
-    app.add_url_rule(rule='/wx', view_func=make_response(robot), methods=['GET', 'POST'])
     app.run(port=5601)
