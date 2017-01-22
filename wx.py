@@ -2,12 +2,13 @@
 import hashlib
 
 from flask import Flask
-from werobot.contrib.flask import make_view
 from flask import request
+from werobot.contrib.flask import make_view
 
 from robot import robot
 
 WX_TOKEN = 'x_forlunch'
+
 app = Flask(__name__)
 app.debug = True
 app.add_url_rule(rule='/wx', view_func=make_view(robot), methods=['GET', 'POST'])
@@ -18,27 +19,23 @@ def hello_world():
     return 'Hello, Flask!'
 
 
-@app.route('/wx', methods=['GET', 'POST'])
+@app.route('/wx')
 def wx_auth():
-    if request.method == 'GET':
-        token = WX_TOKEN
-        data = request.args
-        signature = data.get('signature', '')
-        timestamp = data.get('timestamp', '')
-        nonce = data.get('nonce', '')
-        echostr = data.get('echostr', '')
-        wx_list = [token, timestamp, nonce]
-        wx_list.sort()
-        wx_list = ''.join(wx_list)
+    token = WX_TOKEN
+    data = request.args
+    signature = data.get('signature', '')
+    timestamp = data.get('timestamp', '')
+    nonce = data.get('nonce', '')
+    echostr = data.get('echostr', '')
+    wx_list = [token, timestamp, nonce]
+    wx_list.sort()
+    wx_list = ''.join(wx_list)
 
-        # sha1加密算法
-        if hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature:
-            return make_response(echostr)
-        else:
-            return 'Auth failed!'
-
-    if request.method == 'POST':
-        pass
+    # sha1加密算法
+    if hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature:
+        return echostr
+    else:
+        return 'Auth failed!'
 
 
 if __name__ == '__main__':
