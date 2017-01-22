@@ -7,7 +7,7 @@ from lxml import html
 
 robot = WeRoBot(token='x_forlunch')
 scale_pattern = re.compile(r's\d+x\d+/')
-cache_pattern = re.compile(r'ig_cache_key.*$')
+cache_pattern = re.compile(r'\?ig_cache_key.*$')
 
 @robot.subscribe
 def subscriber(message):
