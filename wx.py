@@ -5,6 +5,8 @@ from flask import Flask
 from flask import make_response
 from flask import request
 
+from robot import robot
+
 WX_TOKEN = 'x_forlunch'
 app = Flask(__name__)
 app.debug = True
@@ -18,24 +20,26 @@ def hello_world():
 @app.route('/wx', methods=['GET', 'POST'])
 def wx_auth():
     if request.method == 'GET':
-        signature = request.args.get('signature')
-        timestamp = request.args.get('timestamp')
-        nonce = request.args.get('nonce')
-        echostr = request.args.get('echostr')
         token = WX_TOKEN
+        data = request.args
+        signature = data.get('signature', '')
+        timestamp = data.get('timestamp', '')
+        nonce = data.get('nonce', '')
+        echostr = data.get('echostr', '')
         wx_list = [token, timestamp, nonce]
         wx_list.sort()
         wx_list = ''.join(wx_list)
-        # sha1加密算法
 
-        if (hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature):
+        # sha1加密算法
+        if hashlib.sha1(wx_list.encode('utf8')).hexdigest() == signature:
             return make_response(echostr)
         else:
-            return '{0}: {1}'.format(signature, w_hashcode)
+            return 'Auth failed!'
 
     if request.method == 'POST':
         pass
 
 
 if __name__ == '__main__':
+    app.add_url_rule(rule='/wx', view_func=make_response(robot), methods=['GET', 'POST'])
     app.run(port=5601)
