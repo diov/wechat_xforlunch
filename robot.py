@@ -5,7 +5,7 @@ import requests
 from werobot import WeRoBot
 from lxml import html
 
-robot = WeRoBot(token='x_forlunch')
+robot = WeRoBot(token='x_forlunch', enable_session=True)
 scale_pattern = re.compile(r's\d+x\d+/')
 cache_pattern = re.compile(r'\?ig_cache_key.*$')
 
@@ -14,7 +14,7 @@ def subscriber(message):
     return 'Hell O! My friend~'
 
 
-@robot.filter(re.compile(".*?instagram.com\/p.*?"))
+@robot.filter(re.compile(r".*?instagram.com/p.*?"))
 def get_ins_pic(message):
     url = message.content
     req = requests.get(url)
@@ -33,5 +33,7 @@ def get_ins_pic(message):
 
 
 @robot.handler
-def hello(message):
-    return '{source_message}, yeah, U are right!'.format(source_message=message.content)
+def hello(message, session):
+    count = session.get("count", 0) + 1
+    session["count"] = count
+    return 'source_message{source_message}, So...What?'.format(source_message=message.content)

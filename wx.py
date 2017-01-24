@@ -2,7 +2,6 @@
 import hashlib
 
 from flask import Flask
-from flask import request
 from werobot.contrib.flask import make_view
 
 from robot import robot
