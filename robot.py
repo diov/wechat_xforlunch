@@ -9,9 +9,10 @@ robot = WeRoBot(token='x_forlunch', enable_session=True)
 scale_pattern = re.compile(r's\d+x\d+/')
 cache_pattern = re.compile(r'\?ig_cache_key.*$')
 
+
 @robot.subscribe
 def subscriber(message):
-    return 'Hell O! My friend~'
+    return '看个电影，听个歌，美滋滋~'
 
 
 @robot.filter(re.compile(r".*?instagram.com/p.*?"))
@@ -36,4 +37,4 @@ def get_ins_pic(message):
 def hello(message, session):
     count = session.get("count", 0) + 1
     session["count"] = count
-    return 'source_message{source_message}, So...What?'.format(source_message=message.content)
+    return '嘘~别说话~'
