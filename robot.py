@@ -9,7 +9,8 @@ from lxml import html
 robot = WeRoBot(token="x_forlunch", enable_session=True)
 scale_pattern = re.compile(r"s\d+x\d+/")
 cache_pattern = re.compile(r"\?ig_cache_key.*$")
-type_xpath = "//meta[@property='og:type']/@content"
+type_xpath = "//meta[@name='medium']/@content"
+url_xpath = "//meta[@property='og:{type}']/@content".format
 
 
 class InsType(Enum):
@@ -34,7 +35,7 @@ def get_ins_pic(message):
     if ins_type == "":
         return "大哥没见过这种东西!🖕"
 
-    url = tree.xpath("//meta[@property='og:{type}']/@content".format(type=ins_type))[0]
+    url = tree.xpath(url_xpath(type=ins_type))[0]
     if url and ins_type == "image":
         if scale_pattern.search(url):
             url = url.replace(scale_pattern.search(url).group(0), '')
