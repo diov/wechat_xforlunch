@@ -42,7 +42,7 @@ def get_ins_pic(message):
         if cache_pattern.search(url):
             url = url.replace(cache_pattern.search(url).group(0), '')
 
-    return "{type}:  {url}".format(type=InsType[ins_type], url=url)
+    return "{type}:  {url}".format(type=InsType[ins_type].value, url=url)
 
 
 @robot.handler
