@@ -7,7 +7,7 @@ from werobot import WeRoBot
 from lxml import html
 
 robot = WeRoBot(token="x_forlunch", enable_session=True)
-scale_pattern = re.compile(r"s\d+x\d+/")
+scale_pattern = re.compile(r"[a-z]\d+x\d+/")
 cache_pattern = re.compile(r"\?ig_cache_key.*$")
 type_xpath = "//meta[@name='medium']/@content"
 url_xpath = "//meta[@property='og:{type}']/@content".format
